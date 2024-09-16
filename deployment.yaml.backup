@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  labels:
+    app: trello-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: trello-app
+  template:
+    metadata:
+      labels:
+        app: trello-app
+    spec:
+      containers:
+      - name: trello-app
+        image: shivi168/trello_management_system:1.0
+        ports:
+        - containerPort: 80
+
+

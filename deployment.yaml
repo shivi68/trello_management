@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  labels:
+    app: trello-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: trello-app
+  template:
+    metadata:
+      labels:
+        app: trello-app
+    spec:
+      containers:
+      - name: trello-app
+        image: shivi168/trello_management_system:1.0
+        ports:
+        - containerPort: 80
+        # Liveness probe using TCP check
+        livenessProbe:
+          tcpSocket:
+            port: 80
+          initialDelaySeconds: 15
+          periodSeconds: 20
+          timeoutSeconds: 5
+
+        # Readiness probe using TCP check
+        readinessProbe:
+          tcpSocket:
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 20
+          timeoutSeconds: 5
